@@ -1,30 +1,29 @@
 {
-  "name": "vendor-name/example-package",
+  "name": "tombroucke/sage-html-forms-export-submissions",
   "type": "package",
-  "description": "An example package for Roots Acorn.",
+  "description": "Export HTML Forms submissions to excel",
   "license": "MIT",
   "authors": [
     {
-      "name": "Brandon Nifong",
-      "email": "brandon@tendency.me"
+      "name": "Tom Broucke",
+      "email": "tom@tombroucke.be"
     }
   ],
   "autoload": {
     "psr-4": {
-      "VendorName\\ExamplePackage\\": "src/"
+      "Otomaties\\SageHtmlFormsExportSubmissions\\": "src/"
     }
   },
   "require": {
-    "php": "^8.0"
+    "php": "^8.0",
+    "phpoffice/phpspreadsheet": "*",
+    "illuminate/support": "^10.28"
   },
   "extra": {
     "acorn": {
       "providers": [
-        "VendorName\\ExamplePackage\\Providers\\ExampleServiceProvider"
-      ],
-      "aliases": {
-        "Example": "VendorName\\ExamplePackage\\Facades\\Example"
-      }
+        "Otomaties\\SageHtmlFormsExportSubmissions\\Providers\\SageHtmlFormsExportSubmissionsServiceProvider"
+      ]
     }
   }
 }
