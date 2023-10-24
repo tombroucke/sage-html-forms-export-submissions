@@ -50,7 +50,7 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
         }, 10, 2);
 
         add_action('admin_init', function () {
-            $isHtmlFormsPage = strpos($_GET['page'], 'html-forms') !== false;
+            $isHtmlFormsPage = isset($_GET['page']) && strpos($_GET['page'], 'html-forms') !== false;
             $isExportTab = isset($_GET['export_to']);
 
             if ($isHtmlFormsPage && $isExportTab) {
