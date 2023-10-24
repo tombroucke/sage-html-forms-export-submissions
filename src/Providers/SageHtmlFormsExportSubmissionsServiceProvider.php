@@ -70,21 +70,5 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
                 'services' => $this->app->make('SageHtmlFormsExportSubmissionsServices'),
             ]);
         });
-
-        add_filter('manage_toplevel_page_html-forms_columns', function($columns) {
-            $unexportableData = [
-                'g-recaptcha-response',
-                'h-captcha-response'
-            ];
-
-            ray($columns);
-
-            foreach ($unexportableData as $key) {
-                unset($columns[$key]);
-            }
-            ray($columns);
-
-            return $columns;
-        }, 99);
     }
 }

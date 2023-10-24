@@ -16,11 +16,8 @@ class Excel extends Abstracts\ExportService
         $sheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet->setActiveSheetIndex(0);
 
-        $data = $this->data();
-        $headers = array_keys($data[0]);
-
-        $sheet->getActiveSheet()->fromArray($headers, null, 'A1');
-        $sheet->getActiveSheet()->fromArray($data, null, 'A2');
+        $sheet->getActiveSheet()->fromArray($this->headers(), null, 'A1');
+        $sheet->getActiveSheet()->fromArray($this->data(), null, 'A2');
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($sheet);
 

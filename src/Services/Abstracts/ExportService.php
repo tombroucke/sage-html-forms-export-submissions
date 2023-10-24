@@ -4,10 +4,17 @@ namespace Otomaties\SageHtmlFormsExportSubmissions\Services\Abstracts;
 
 use HTML_Forms\Form;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Otomaties\SageHtmlFormsExportSubmissions\Services\Contracts\Exportable;
 
 abstract class ExportService implements Exportable
 {
+
+    const EXCLUDE_FIELDS = [
+        'g-recaptcha-response',
+        'h-captcha-response'
+    ];
+
     public function __construct(private Form $form)
     {
     }
@@ -17,24 +24,37 @@ abstract class ExportService implements Exportable
         return Str::slug($this->form->title);
     }
 
+    public function headers() {
+        $columns = [];
+		foreach ( $this->submissions() as $submission ) {
+			if ( ! is_array( $submission->data ) ) {
+				continue;
+			}
+
+			foreach ( $submission->data as $field => $value ) {
+				if ( ! isset( $columns[ $field ] ) && !in_array($field, self::EXCLUDE_FIELDS) ) {
+					$columns[ $field ] = esc_html(Str::title(str_replace('-', ' ', $field)));
+				}
+			}
+		}
+        return $columns;
+    }
+
+    private function submissions() : Collection
+    {
+        return collect(hf_get_form_submissions($this->form->id));
+    }
+
     public function data() : array
     {
-        $submissions = collect(hf_get_form_submissions($this->form->id));
-        $data = $submissions->pluck('data');
-
-        $unexportableData = [
-            'g-recaptcha-response',
-            'h-captcha-response'
-        ];
-        $data = $data->map(function ($item) use ($unexportableData) {
-            foreach ($unexportableData as $key) {
-                if (isset($item[$key])) {
-                    unset($item[$key]);
-                }
+        $headers = $this->headers();
+        $submissions = $this->submissions()->pluck('data')->map(function ($data) use ($headers) {
+            $submission = [];
+            foreach ($headers as $key => $value) {
+                $submission[$value] = $data[$key] ?? '';
             }
-            return $item;
+            return $submission;
         });
-
-        return $data->toArray();
+        return $submissions->toArray();
     }
 }
