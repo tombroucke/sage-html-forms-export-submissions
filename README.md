@@ -1,31 +1,11 @@
-# Acorn Example Package
+# Sage HTML Forms export submissions
 
-This repo can be used to scaffold an Acorn package. See the [Acorn Package Development](https://roots.io/acorn/docs/package-development/) docs for further information.
+Acorn package to export HTML Forms submissions
 
 ## Installation
 
 You can install this package with Composer:
 
 ```bash
-composer require vendor-name/example-package
-```
-
-You can publish the config file with:
-
-```shell
-$ wp acorn vendor:publish --provider="VendorName\ExamplePackage\Providers\ExampleServiceProvider"
-```
-
-## Usage
-
-From a Blade template:
-
-```blade
-@include('Example::example')
-```
-
-From WP-CLI:
-
-```shell
-$ wp acorn example
+composer require tombroucke/sage-html-forms-export-submissions
 ```
