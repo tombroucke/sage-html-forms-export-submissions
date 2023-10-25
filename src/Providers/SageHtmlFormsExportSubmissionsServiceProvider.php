@@ -23,9 +23,14 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
             $formId = filter_input(INPUT_GET, 'form_id', FILTER_SANITIZE_NUMBER_INT);
             $form = hf_get_form($formId);
             return collect([
-                'excel' => new \Otomaties\SageHtmlFormsExportSubmissions\Services\Excel($form),
+                new \Otomaties\SageHtmlFormsExportSubmissions\Services\Excel($form),
             ]);
         });
+    }
+
+    private function exportSubmissionCapability()
+    {
+        return apply_filters('hf_export_submission_capability', 'edit_forms');
     }
 
     /**
@@ -45,26 +50,40 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
         );
 
         add_filter('hf_admin_tabs', function ($tabs, $form) {
+            if (!current_user_can($this->exportSubmissionCapability())) {
+                return $tabs;
+            }
             $tabs['export'] = __('Export submissions', 'html-forms-export-submissions');
             return $tabs;
         }, 10, 2);
 
         add_action('admin_init', function () {
             $isHtmlFormsPage = isset($_GET['page']) && strpos($_GET['page'], 'html-forms') !== false;
-            $isExportTab = isset($_GET['export_to']);
+            $exportTo = isset($_GET['export_to']) ? sanitize_text_field($_GET['export_to']) : null;
+            $formId = filter_input(INPUT_GET, 'form_id', FILTER_SANITIZE_NUMBER_INT);
 
-            if ($isHtmlFormsPage && $isExportTab) {
-                $form = hf_get_form($_GET['form_id']);
-                $service = sanitize_text_field($_GET['export_to']);
+            if ($isHtmlFormsPage && $exportTo && $formId) {
 
-                $excel = $this->app->make('SageHtmlFormsExportSubmissionsServices')->get($service);
+                if (!wp_verify_nonce($_GET['_wpnonce'] ?: '', 'export-submissions')) {
+                    wp_die(__('Invalid nonce.'));
+                }
 
-                $excel->export($form);
+                if (!current_user_can($this->exportSubmissionCapability())) {
+                    wp_die(__('You do not have sufficient permissions to access this page.'));
+                }
+
+                $form = hf_get_form($formId);
+
+                $exportService = $this->app->make('SageHtmlFormsExportSubmissionsServices')->first(function ($service) use ($exportTo) {
+                    return $service->key() === $exportTo;
+                });
+
+                $exportService->export($form);
+
             }
         });
 
         add_action('hf_admin_output_form_tab_export', function (Form $form) {
-
             echo view('SageHtmlFormsExportSubmissions::export-submissions', [
                 'form' => $form,
                 'services' => $this->app->make('SageHtmlFormsExportSubmissionsServices'),

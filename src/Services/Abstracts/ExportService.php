@@ -24,6 +24,17 @@ abstract class ExportService implements Exportable
         return Str::slug($this->form->title);
     }
 
+    public function exportLink() : string
+    {
+        $exportLink = admin_url('admin.php?page=html-forms&view=edit');
+        $exportLink = add_query_arg([
+            'form_id' => $this->form->ID,
+            'export_to' => $this->key(),
+        ], $exportLink);
+        $exportLink = wp_nonce_url( $exportLink, 'export-submissions' );
+        return html_entity_decode($exportLink);
+    }
+
     public function headers() {
         $columns = [];
 		foreach ( $this->submissions() as $submission ) {

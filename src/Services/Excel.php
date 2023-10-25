@@ -4,6 +4,11 @@ namespace Otomaties\SageHtmlFormsExportSubmissions\Services;
 
 class Excel extends Abstracts\ExportService
 {
+    public function key() : string
+    {
+        return 'excel';
+    }
+
     public function label() : string
     {
         return __('Excel', 'html-forms-export-submissions');
