@@ -1,6 +1,8 @@
 # Sage HTML Forms export submissions
 
-Acorn package to export [HTML Forms](https://www.htmlformsplugin.com/) submissions
+Acorn package to export [HTML Forms](https://www.htmlformsplugin.com/) submissions to
+- Microsoft Excel
+- CSV
 
 ## Installation
 
