@@ -40,6 +40,11 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
     */
     public function boot()
     {
+        $domain = 'html-forms-export-submissions';
+        $locale = apply_filters('plugin_locale', get_locale(), $domain);
+        $moFile = __DIR__ . '/../../resources/lang/html-forms-export-submissions-' . $locale . '.mo';
+        load_textdomain($domain, $moFile);
+
         $this->publishes([
             __DIR__.'/../../config/html-forms-export-submissions.php' => $this->app->configPath('html-forms-export-submissions.php'),
         ], 'config');
