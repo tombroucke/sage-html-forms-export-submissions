@@ -1,9 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-02T12:33:18+00:00\n"
-"PO-Revision-Date: 2023-11-02 13:33+0100\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sage-html-forms-"
+"export-submissions\n"
+"POT-Creation-Date: 2023-11-02 14:15+0100\n"
+"PO-Revision-Date: 2023-11-02 14:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -13,14 +14,31 @@ msgstr ""
 "X-Generator: Poedit 3.3.1\n"
 "X-Domain: html-forms-export-submissions\n"
 
-#: src/Providers/SageHtmlFormsExportSubmissionsServiceProvider.php:58
+#: resources/views/export-submissions.blade.php:1
+#: src/Providers/SageHtmlFormsExportSubmissionsServiceProvider.php:61
 msgid "Export submissions"
 msgstr "Inzendingen exporteren"
 
-#: src/Providers/SageHtmlFormsExportSubmissionsServiceProvider.php:59
-msgid "Test EN"
-msgstr "Test NL"
+#: resources/views/export-submissions.blade.php:4
+#, python-format
+msgid "Export to %s file"
+msgstr "Exporteer naar %s bestand"
+
+#: src/Providers/SageHtmlFormsExportSubmissionsServiceProvider.php:73
+msgid "Invalid nonce."
+msgstr "Ongeldige nonce."
+
+#: src/Providers/SageHtmlFormsExportSubmissionsServiceProvider.php:77
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Je hebt niet voldoende rechten om deze pagina te bekijken."
 
 #: src/Services/Excel.php:14
 msgid "Excel"
 msgstr "Excel"
+
+#. Plugin Name of the plugin/theme
+msgid "Sage HTML Forms Export Submissions"
+msgstr "Sage HTML Forms Inzendingen exporteren"
+
+#~ msgid "Test EN"
+#~ msgstr "Test NL"
