@@ -1,6 +1,6 @@
 # Sage HTML Forms export submissions
 
-Acorn package to export HTML Forms submissions
+Acorn package to export [HTML Forms](https://www.htmlformsplugin.com/) submissions
 
 ## Installation
 
