@@ -24,6 +24,7 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
             $form = hf_get_form($formId);
             return collect([
                 new \Otomaties\SageHtmlFormsExportSubmissions\Services\Excel($form),
+                new \Otomaties\SageHtmlFormsExportSubmissions\Services\Csv($form),
             ]);
         });
     }
