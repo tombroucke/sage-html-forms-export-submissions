@@ -2,7 +2,7 @@
 
 namespace Otomaties\SageHtmlFormsExportSubmissions\Providers;
 
-use Roots\Acorn\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use HTML_Forms\Form;
 
 class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
