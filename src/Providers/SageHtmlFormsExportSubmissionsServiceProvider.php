@@ -4,7 +4,7 @@ namespace Otomaties\SageHtmlFormsExportSubmissions\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class SageHtmlFormsSubmissionsServiceProvider extends ServiceProvider
+class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
 {
     /**
     * Register any application services.
