@@ -4,21 +4,21 @@ namespace Otomaties\SageHtmlFormsExportSubmissions\Services;
 
 class Csv extends Abstracts\ExportService
 {
-    public function key() : string
+    public function key(): string
     {
         return 'csv';
     }
 
-    public function label() : string
+    public function label(): string
     {
         return __('CSV', 'html-forms-export-submissions');
     }
 
-    public function export() : void
+    public function export(): void
     {
-        $fileName = $this->fileName() . '.csv';
+        $fileName = $this->fileName().'.csv';
 
-        $sheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
         $sheet->setActiveSheetIndex(0);
 
         $sheet->getActiveSheet()->fromArray($this->headers(), null, 'A1');
@@ -26,8 +26,8 @@ class Csv extends Abstracts\ExportService
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($sheet);
 
-        header("Content-Type: text/csv");
-        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
 
         $writer->save('php://output');
         exit;

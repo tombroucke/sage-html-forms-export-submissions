@@ -25,5 +25,8 @@
         "Otomaties\\SageHtmlFormsExportSubmissions\\Providers\\SageHtmlFormsExportSubmissionsServiceProvider"
       ]
     }
+  },
+  "require-dev": {
+    "laravel/pint": "^1.22"
   }
 }
