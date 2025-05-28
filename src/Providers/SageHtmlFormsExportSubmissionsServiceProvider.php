@@ -2,15 +2,16 @@
 
 namespace Otomaties\SageHtmlFormsExportSubmissions\Providers;
 
+use HTML_Forms\Form;
 use Illuminate\Support\ServiceProvider;
 
 class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
 {
     /**
-    * Register any application services.
-    *
-    * @return void
-    */
+     * Register any application services.
+     *
+     * @return void
+     */
     public function register()
     {
         $this->mergeConfigFrom(
@@ -21,6 +22,7 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
         $this->app->bind('SageHtmlFormsExportSubmissionsServices', function () {
             $formId = filter_input(INPUT_GET, 'form_id', FILTER_SANITIZE_NUMBER_INT);
             $form = hf_get_form($formId);
+
             return collect([
                 new \Otomaties\SageHtmlFormsExportSubmissions\Services\Excel($form),
                 new \Otomaties\SageHtmlFormsExportSubmissions\Services\Csv($form),
@@ -34,15 +36,15 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
     }
 
     /**
-    * Bootstrap any application services.
-    *
-    * @return void
-    */
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $domain = 'html-forms-export-submissions';
         $locale = apply_filters('plugin_locale', get_locale(), $domain);
-        $moFile = __DIR__ . '/../../resources/lang/html-forms-export-submissions-' . $locale . '.mo';
+        $moFile = __DIR__.'/../../resources/lang/html-forms-export-submissions-'.$locale.'.mo';
         load_textdomain($domain, $moFile);
 
         $this->publishes([
@@ -55,10 +57,11 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
         );
 
         add_filter('hf_admin_tabs', function ($tabs, $form) {
-            if (!current_user_can($this->exportSubmissionCapability())) {
+            if (! current_user_can($this->exportSubmissionCapability())) {
                 return $tabs;
             }
             $tabs['export'] = __('Export submissions', 'html-forms-export-submissions');
+
             return $tabs;
         }, 10, 2);
 
@@ -69,11 +72,11 @@ class SageHtmlFormsExportSubmissionsServiceProvider extends ServiceProvider
 
             if ($isHtmlFormsPage && $exportTo && $formId) {
 
-                if (!wp_verify_nonce($_GET['_wpnonce'] ?: '', 'export-submissions')) {
+                if (! wp_verify_nonce($_GET['_wpnonce'] ?: '', 'export-submissions')) {
                     wp_die(__('Invalid nonce.'));
                 }
 
-                if (!current_user_can($this->exportSubmissionCapability())) {
+                if (! current_user_can($this->exportSubmissionCapability())) {
                     wp_die(__('You do not have sufficient permissions to access this page.'));
                 }
 
