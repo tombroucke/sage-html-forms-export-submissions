@@ -53,7 +53,9 @@ abstract class ExportService implements Exportable
 
     private function submissions(): Collection
     {
-        return collect(hf_get_form_submissions($this->form->id));
+        return collect(hf_get_form_submissions($this->form->id, [
+            'limit' => -1,
+        ]));
     }
 
     public function data(): array
